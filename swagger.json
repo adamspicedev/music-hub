@@ -1,0 +1,299 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": { "200": { "description": "" } }
+      }
+    },
+    "/artists/{id}": {
+      "get": {
+        "operationId": "ArtistController_getArtistById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "The found song" } },
+        "tags": ["artists"]
+      }
+    },
+    "/artists": {
+      "get": {
+        "operationId": "ArtistController_getArtists",
+        "parameters": [],
+        "responses": { "200": { "description": "All available artists" } },
+        "tags": ["artists"]
+      }
+    },
+    "/auth/local/signup": {
+      "post": {
+        "operationId": "AuthController_signupLocal",
+        "summary": "Operation description",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AuthDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "type": "object" } }
+            }
+          }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/auth/local/signin": {
+      "post": {
+        "operationId": "AuthController_signinLocal",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AuthDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "type": "object" } }
+            }
+          }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "type": "boolean" } }
+            }
+          }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshTokens",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "type": "object" } }
+            }
+          }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/songs/{id}": {
+      "get": {
+        "operationId": "SongController_getSongById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "The found song" } },
+        "tags": ["songs"]
+      }
+    },
+    "/songs": {
+      "get": {
+        "operationId": "SongController_getSongs",
+        "parameters": [],
+        "responses": { "200": { "description": "All available songs" } },
+        "tags": ["songs"]
+      }
+    },
+    "/albums/{id}": {
+      "get": {
+        "operationId": "AlbumController_getArtistById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "The found album" } },
+        "tags": ["albums"]
+      }
+    },
+    "/albums": {
+      "get": {
+        "operationId": "AlbumController_getArtists",
+        "parameters": [],
+        "responses": { "200": { "description": "All available artists" } },
+        "tags": ["albums"]
+      }
+    },
+    "/playlists/{id}": {
+      "get": {
+        "operationId": "PlaylistController_getPlaylist",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "The found playlist" } },
+        "tags": ["playlists"],
+        "security": [{ "JWT": [] }]
+      }
+    },
+    "/playlists": {
+      "get": {
+        "operationId": "PlaylistController_getPlaylists",
+        "parameters": [],
+        "responses": { "200": { "description": "all available playlists" } },
+        "tags": ["playlists"],
+        "security": [{ "JWT": [] }]
+      },
+      "post": {
+        "operationId": "PlaylistController_createPlayList",
+        "summary": "Create Playlist",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreatePlaylistDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Playlist created." },
+          "401": { "description": "Unauthorised." },
+          "403": { "description": "Forbidden." }
+        },
+        "tags": ["playlists"],
+        "security": [{ "JWT": [] }]
+      }
+    },
+    "/playlists/add-song": {
+      "post": {
+        "operationId": "PlaylistController_addSongToPlaylist",
+        "summary": "Add song to a playlist",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePlaylistSongsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Playlist updated." },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "type": "object" } }
+            }
+          },
+          "401": { "description": "Unauthorised." },
+          "403": { "description": "Forbidden." }
+        },
+        "tags": ["playlists"],
+        "security": [{ "JWT": [] }]
+      }
+    },
+    "/playlists/remove-song": {
+      "delete": {
+        "operationId": "PlaylistController_deleteSongFromPlaylist",
+        "summary": "Delete Song from a playlist",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePlaylistSongsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Playlist updated." },
+          "401": { "description": "Unauthorised." },
+          "403": { "description": "Forbidden." }
+        },
+        "tags": ["playlists"],
+        "security": [{ "JWT": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "Music Hub API",
+    "description": "The Music Hub API was built for a whitecliffe course",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    { "name": "artists", "description": "" },
+    { "name": "albums", "description": "" },
+    { "name": "songs", "description": "" },
+    { "name": "playlists", "description": "" },
+    { "name": "users", "description": "" }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" }
+    },
+    "schemas": {
+      "AuthDto": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["email", "password"]
+      },
+      "CreatePlaylistDto": {
+        "type": "object",
+        "properties": { "name": { "type": "string" } },
+        "required": ["name"]
+      },
+      "UpdatePlaylistSongsDto": {
+        "type": "object",
+        "properties": {
+          "songId": { "type": "string" },
+          "playlistId": { "type": "string" }
+        },
+        "required": ["songId", "playlistId"]
+      }
+    }
+  }
+}
